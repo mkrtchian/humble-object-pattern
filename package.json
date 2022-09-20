@@ -2,14 +2,7 @@
   "name": "humble-object-pattern",
   "version": "1.0.0",
   "description": "Examples of implementing the humble object pattern with tests",
-  "type": "module",
-  "engines": {
-    "node": ">= 18"
-  },
-  "main": "src/index.ts",
-  "scripts": {
-    "test": "jest"
-  },
+  "homepage": "https://github.com/mkrtchian/humble-object-pattern#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mkrtchian/humble-object-pattern.git"
@@ -25,5 +18,34 @@
   "bugs": {
     "url": "https://github.com/mkrtchian/humble-object-pattern/issues"
   },
-  "homepage": "https://github.com/mkrtchian/humble-object-pattern#readme"
+  "type": "module",
+  "engines": {
+    "node": ">= 18"
+  },
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint --max-warnings=0 .",
+    "lint:fix": "eslint --fix --max-warnings=0 .",
+    "type-check": "tsc --noEmit",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.3",
+    "@types/node": "^18.7.18",
+    "@typescript-eslint/eslint-plugin": "^5.38.0",
+    "@typescript-eslint/parser": "^5.38.0",
+    "eslint": "^8.23.1",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.3"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,json,md}": [
+      "prettier --write",
+      "eslint --fix --max-warnings=0"
+    ]
+  },
+  "prepare": "husky install"
 }
