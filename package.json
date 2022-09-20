@@ -27,7 +27,8 @@
     "lint": "eslint --max-warnings=0 .",
     "lint:fix": "eslint --fix --max-warnings=0 .",
     "type-check": "tsc --noEmit",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
@@ -46,6 +47,5 @@
       "prettier --write",
       "eslint --fix --max-warnings=0"
     ]
-  },
-  "prepare": "husky install"
+  }
 }
