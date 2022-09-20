@@ -1,0 +1,29 @@
+{
+  "name": "humble-object-pattern",
+  "version": "1.0.0",
+  "description": "Examples of implementing the humble object pattern with tests",
+  "type": "module",
+  "engines": {
+    "node": ">= 18"
+  },
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkrtchian/humble-object-pattern.git"
+  },
+  "keywords": [
+    "humble-object-pattern",
+    "unit-tests",
+    "hexagonal-architecture",
+    "functional-architecture"
+  ],
+  "author": "Roman Mkrtchian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mkrtchian/humble-object-pattern/issues"
+  },
+  "homepage": "https://github.com/mkrtchian/humble-object-pattern#readme"
+}
