@@ -8,7 +8,7 @@ All the unit and integration tests are included.
 
 ## Audit system example
 
-The [Audit system example](src/auditSystem) (from chapter 6 in the book) refactors a project that uses the filesystem, from overcomplicated code to **functional architecture**.
+The [Audit system example](src/audit-system) (from chapter 6 in the book) refactors a project that uses the filesystem, from overcomplicated code to **functional architecture**.
 
 ## CRM example
 
