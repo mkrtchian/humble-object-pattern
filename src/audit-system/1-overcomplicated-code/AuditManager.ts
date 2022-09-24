@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as fs from "fs";
+import path from "path";
 
 export class AuditManager {
   constructor(
@@ -8,44 +8,44 @@ export class AuditManager {
   ) {}
 
   public addRecord(visitorName: string, timeOfVisit: Date) {
-    const filePaths: string[] = []; // get file paths from directoryName
-    const sortedDirectories: string[] = this.sortByIndex(filePaths);
+    const fileNames = fs.readdirSync(this.directoryName);
+    const sortedFileNames: string[] = this.sortByIndex(fileNames);
 
     const newRecord = `${visitorName};${timeOfVisit.toISOString()}`;
 
-    if (sortedDirectories.length == 0) {
+    if (sortedFileNames.length == 0) {
       fs.writeFileSync(`${this.directoryName}/audit_1.txt`, newRecord);
       return;
     }
 
-    const currentFileIndex = sortedDirectories.length;
-    const currentFilePath = sortedDirectories[sortedDirectories.length - 1];
-    const lines = []; // read file lines;
+    const currentFileIndex = sortedFileNames.length;
+    const currentFileName = sortedFileNames[sortedFileNames.length - 1];
+    const currentFilePath = `${this.directoryName}/${currentFileName}`;
+    const lines = fs.readFileSync(currentFilePath).toString().split("\r\n");
 
     if (lines.length < this.maxEntriesPerFile) {
       lines.push(newRecord);
       const newContent = lines.join("\r\n");
-      // write newContent in currentFilePath
+      fs.writeFileSync(currentFilePath, newContent);
     } else {
-      const newIndex = currentFileIndex + 1;
-      const newName = `audit_${newIndex}.txt`;
-      // create a new file in this.directoryName / newName,
-      // and write newRecord in it
+      const newFileIndex = currentFileIndex + 1;
+      const newFileName = `audit_${newFileIndex}.txt`;
+      fs.writeFileSync(`${this.directoryName}/${newFileName}`, newRecord);
     }
   }
 
   private sortByIndex(files: string[]): string[] {
-    return files;
-    /*
-      .map(path => (index: getFileIndex(path), path))
-      .OrderBy(x => x.index)
-      .map(path => path.path);
-      */
-  }
-
-  private getFileIndex(filePath: string) {
-    // File name example: audit_1.txt
-    const fileName = ""; // get file name from path
-    return parseInt(fileName.split("_")[1]);
+    const getFileIndex = (filePath: string) => {
+      const fileName = path.basename(filePath);
+      return fileName.split("_")[1];
+    };
+    const compareFiles = (file1: string, file2: string) => {
+      const index1 = getFileIndex(file1);
+      const index2 = getFileIndex(file2);
+      if (index1 > index2) return 1;
+      if (index1 < index2) return -1;
+      return 0;
+    };
+    return [...files].sort(compareFiles);
   }
 }
