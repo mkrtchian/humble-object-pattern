@@ -3,6 +3,12 @@ import { AuditManager } from "./AuditManager";
 
 const directoryName = `${__dirname}/test_artifacts`;
 
+beforeAll(() => {
+  if (!fs.existsSync(directoryName)) {
+    fs.mkdirSync(directoryName);
+  }
+});
+
 beforeEach(() => {
   clearDirectory();
 });
