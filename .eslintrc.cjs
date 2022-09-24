@@ -12,4 +12,14 @@ module.exports = {
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:@typescript-eslint/strict",
   ],
+  overrides: [
+    {
+      files: ["**/*.test.ts"],
+      plugins: ["jest"],
+      rules: {
+        "@typescript-eslint/unbound-method": "off",
+        "jest/unbound-method": "error",
+      },
+    },
+  ],
 };
