@@ -3,7 +3,7 @@ import path from "path";
 export interface FileSystem {
   readdirSync(directory: string): string[];
   writeFileSync(directory: string, content: string): void;
-  readFileSync(directory: string): string;
+  readFileSync(directory: string): Buffer;
 }
 
 export class AuditManager {
