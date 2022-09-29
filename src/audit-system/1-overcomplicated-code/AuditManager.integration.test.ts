@@ -53,7 +53,7 @@ it("adds the record to the last existing file if no overflow", () => {
   );
 });
 
-it("acreates a new file with the record if last file overflows", () => {
+it("creates a new file with the record if last file overflows", () => {
   fs.writeFileSync(
     `${directoryName}/audit_1.txt`,
     "Bob;2019-04-03T00:00:00.000Z\r\nJoe;2019-04-04T00:00:00.000Z"

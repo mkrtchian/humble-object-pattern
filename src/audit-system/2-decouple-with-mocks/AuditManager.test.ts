@@ -45,7 +45,7 @@ it("adds the record to the last existing file if no overflow", () => {
   );
 });
 
-it("acreates a new file with the record if last file overflows", () => {
+it("creates a new file with the record if last file overflows", () => {
   const fileSystemMock: FileSystem = {
     readdirSync: () => ["audit_1.txt", "audit_2.txt"],
     readFileSync: (directory) => {
