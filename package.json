@@ -52,5 +52,8 @@
       "prettier --write",
       "eslint --fix --max-warnings=0"
     ]
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.1"
   }
 }
