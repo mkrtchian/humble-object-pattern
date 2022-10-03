@@ -1,52 +1,69 @@
+import { open, Database } from "sqlite";
 import sqlite3 from "sqlite3";
 import * as fs from "fs";
 import type { UserType } from "./types";
 import { User } from "./User";
 
-const databaseFilePath = `${__dirname}/test_artifacts/crm.db`;
-let db: sqlite3.Database;
+const databaseFileFolder = `${__dirname}/test_artifacts`;
+const databaseFilePath = `${databaseFileFolder}/crm.db`;
+export let db: Database;
 
-export function initializeDB() {
+export async function initializeDB() {
   createDBDirectory();
-  db = new sqlite3.Database(databaseFilePath);
-  db.run(
+  db = await open({
+    filename: databaseFilePath,
+    driver: sqlite3.Database,
+  });
+  await db.run(
     "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY, email TEXT, type TEXT)"
   );
-  db.run(
+  await db.run(
     "CREATE TABLE IF NOT EXISTS Company (domainName TEXT PRIMARY KEY, numberOfEmployees INTEGER)"
   );
 }
 
 function createDBDirectory() {
-  if (!fs.existsSync(databaseFilePath)) {
-    fs.mkdirSync(databaseFilePath);
+  if (!fs.existsSync(databaseFileFolder)) {
+    fs.mkdirSync(databaseFileFolder);
   }
 }
 
-export function closeDB() {
-  db.close();
+export async function closeDB() {
+  await db.close();
 }
 
 export function deleteDB() {
-  fs.rmSync(databaseFilePath);
+  if (fs.existsSync(databaseFilePath)) {
+    fs.rmSync(databaseFilePath);
+  }
 }
 
-export function getUserById(userId: number): [number, string, UserType] {
-  return [userId, "me@mycorp.com", "customer"];
+export async function getUserById(
+  userId: number
+): Promise<{ id: number; email: string; type: UserType } | undefined> {
+  return db.get(`SELECT * FROM User WHERE id = ${userId}`);
 }
 
-export function getUserByEmail(email: string): [number, string, UserType] {
-  return [1, email, "customer"];
+export async function getUserByEmail(
+  email: string
+): Promise<{ id: number; email: string; type: UserType } | undefined> {
+  return db.get(`SELECT * FROM User WHERE email = ${email}`);
 }
 
-export function saveUser(user: User) {
-  return user;
+export async function saveUser(user: User): Promise<void> {
+  await db.run(`UPDATE User SET type = ?, email = ? WHERE id = ?`, [
+    user.type,
+    user.email,
+    user.userId,
+  ]);
 }
 
-export function getCompany(): [string, number] {
-  return ["mycorp.com", 1];
+export async function getCompany(): Promise<
+  { domainName: string; numberOfEmployees: number } | undefined
+> {
+  return db.get("SELECT * FROM Company");
 }
 
-export function saveCompany(newEmployeeNumber: number) {
-  return newEmployeeNumber;
+export async function saveCompany(newEmployeeNumber: number): Promise<void> {
+  await db.run(`UPDATE Company SET numberOfEmployees = ?`, [newEmployeeNumber]);
 }
