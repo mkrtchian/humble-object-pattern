@@ -1,27 +1,34 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as Database from "./Database";
 import * as MessageBus from "./MessageBus";
 import type { UserType } from "./types";
 
 export class User {
   constructor(
-    private userId: number,
-    private email: string,
-    private type: UserType
+    public userId: number,
+    public email: string | undefined,
+    public type: UserType | undefined
   ) {}
 
-  changeEmail(userId: number, newEmail: string) {
-    const userData = Database.getUserById(userId);
+  async changeEmail(userId: number, newEmail: string) {
+    const userData = await Database.getUserById(userId);
+    if (!userData)
+      throw new Error(
+        `User entree with id ${userId} not found in the database`
+      );
     this.userId = userId;
-    this.email = userData[1];
-    this.type = userData[2];
+    this.email = userData.email;
+    this.type = userData.type;
 
     if (this.email == newEmail) {
       return;
     }
 
-    const companyData = Database.getCompany();
-    const companyDomainName = companyData[0];
-    const numberOfEmployees = companyData[1];
+    const companyData = await Database.getCompany();
+    if (!companyData)
+      throw new Error("Company entree not found in the database");
+    const companyDomainName = companyData.domainName;
+    const numberOfEmployees = companyData.numberOfEmployees;
 
     const emailDomain = newEmail.split("@")[1];
     const isEmailCorporate = emailDomain === companyDomainName;
@@ -30,12 +37,12 @@ export class User {
     if (this.type != newType) {
       const delta = newType === "employee" ? 1 : -1;
       const newNumber = numberOfEmployees + delta;
-      Database.saveCompany(newNumber);
+      await Database.saveCompany(newNumber);
     }
     this.email = newEmail;
     this.type = newType;
 
-    Database.saveUser(this);
+    await Database.saveUser(this);
     MessageBus.sendEmailChangedMessage(userId, newEmail);
   }
 }
