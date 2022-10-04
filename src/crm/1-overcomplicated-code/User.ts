@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as Database from "./Database";
 import * as MessageBus from "./MessageBus";
 import type { UserType } from "./types";
