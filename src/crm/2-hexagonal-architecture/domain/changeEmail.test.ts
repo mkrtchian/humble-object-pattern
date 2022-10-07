@@ -4,7 +4,7 @@ import { User } from "./User";
 describe("Main feature", () => {
   it("changes email from non corporate to corporate", () => {
     const company = new Company("mycorp.com", 1);
-    const sut = new User("user@gmail.com", "customer");
+    const sut = new User(1, "user@gmail.com", "customer");
 
     sut.changeEmail("user@mycorp.com", company);
 
@@ -15,7 +15,7 @@ describe("Main feature", () => {
 
   it("changes email from corporate to non corporate", () => {
     const company = new Company("mycorp.com", 1);
-    const sut = new User("user@mycorp.com", "employee");
+    const sut = new User(1, "user@mycorp.com", "employee");
 
     sut.changeEmail("user@gmail.com", company);
 
@@ -26,7 +26,7 @@ describe("Main feature", () => {
 
   it("does not change anything when the email is the same", () => {
     const company = new Company("mycorp.com", 1);
-    const sut = new User("user@gmail.com", "customer");
+    const sut = new User(1, "user@gmail.com", "customer");
 
     sut.changeEmail("user@gmail.com", company);
 
@@ -37,7 +37,7 @@ describe("Main feature", () => {
 
   it("changes an email for a corporate user", () => {
     const company = new Company("mycorp.com", 1);
-    const sut = new User("user@mycorp.com", "employee");
+    const sut = new User(1, "user@mycorp.com", "employee");
 
     sut.changeEmail("new@mycorp.com", company);
 
@@ -48,7 +48,7 @@ describe("Main feature", () => {
 
   it("changes an email for a non corporate user", () => {
     const company = new Company("mycorp.com", 1);
-    const sut = new User("user@gmail.com", "customer");
+    const sut = new User(1, "user@gmail.com", "customer");
 
     sut.changeEmail("new@gmail.com", company);
 
