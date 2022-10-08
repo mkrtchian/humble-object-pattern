@@ -1,4 +1,5 @@
 import { Company } from "./Company";
+import { EmailChanged } from "./events";
 import { User } from "./User";
 
 describe("Main feature", () => {
@@ -11,6 +12,9 @@ describe("Main feature", () => {
     expect(company.numberOfEmployees).toBe(2);
     expect(sut.email).toBe("user@mycorp.com");
     expect(sut.type).toBe("employee");
+    expect(sut.emailChangedEvents).toEqual([
+      new EmailChanged(1, "user@mycorp.com"),
+    ]);
   });
 
   it("changes email from corporate to non corporate", () => {
@@ -22,6 +26,9 @@ describe("Main feature", () => {
     expect(company.numberOfEmployees).toBe(0);
     expect(sut.email).toBe("user@gmail.com");
     expect(sut.type).toBe("customer");
+    expect(sut.emailChangedEvents).toEqual([
+      new EmailChanged(1, "user@gmail.com"),
+    ]);
   });
 
   it("does not change anything when the email is the same", () => {
@@ -33,6 +40,7 @@ describe("Main feature", () => {
     expect(company.numberOfEmployees).toBe(1);
     expect(sut.email).toBe("user@gmail.com");
     expect(sut.type).toBe("customer");
+    expect(sut.emailChangedEvents).toEqual([]);
   });
 
   it("changes an email for a corporate user", () => {
@@ -44,6 +52,9 @@ describe("Main feature", () => {
     expect(company.numberOfEmployees).toBe(1);
     expect(sut.email).toBe("new@mycorp.com");
     expect(sut.type).toBe("employee");
+    expect(sut.emailChangedEvents).toEqual([
+      new EmailChanged(1, "new@mycorp.com"),
+    ]);
   });
 
   it("changes an email for a non corporate user", () => {
@@ -55,6 +66,9 @@ describe("Main feature", () => {
     expect(company.numberOfEmployees).toBe(1);
     expect(sut.email).toBe("new@gmail.com");
     expect(sut.type).toBe("customer");
+    expect(sut.emailChangedEvents).toEqual([
+      new EmailChanged(1, "new@gmail.com"),
+    ]);
   });
 });
 
