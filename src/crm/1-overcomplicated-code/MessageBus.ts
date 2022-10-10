@@ -1,11 +1,11 @@
-class IBus {
+class Bus {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   send(message: string) {
-    console.log(message);
     // TODO: add a real message broker
   }
 }
 
-const bus: IBus = new IBus();
+const bus = new Bus();
 
 export function sendEmailChangedMessage(userId: number, newEmail: string) {
   bus.send(

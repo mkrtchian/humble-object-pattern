@@ -1,8 +1,10 @@
 import * as Database from "./Database";
 import { CompanyFactory, UserFactory } from "./factories";
-import * as MessageBus from "./MessageBus";
+import { MessageBus } from "./MessageBus";
 
 export class UserController {
+  constructor(private messageBus: MessageBus) {}
+
   async changeEmail(userId: number, newEmail: string) {
     const userData = await Database.getUserById(userId);
     if (!userData)
@@ -19,6 +21,6 @@ export class UserController {
 
     await Database.saveCompany(company.numberOfEmployees);
     await Database.saveUser(user);
-    MessageBus.sendEmailChangedMessage(userId, newEmail);
+    this.messageBus.sendEmailChangedMessage(userId, newEmail);
   }
 }
