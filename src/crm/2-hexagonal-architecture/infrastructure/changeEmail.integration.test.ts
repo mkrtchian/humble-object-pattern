@@ -12,6 +12,7 @@ afterEach(async () => {
 });
 
 it("changes email from non corporate to corporate", async () => {
+  // Arrange
   await db.run(
     `INSERT INTO Company (domainName, numberOfEmployees) VALUES ('mycorp.com', 0)`
   );
@@ -21,8 +22,10 @@ it("changes email from non corporate to corporate", async () => {
   const busMock = { send: jest.fn() };
   const sut = new UserController(new MessageBus(busMock));
 
+  // Act
   await sut.changeEmail(1, "user@mycorp.com");
 
+  // Assert
   const userData: { email: string; type: string } | undefined = await db.get(
     "SELECT * FROM User WHERE id = 1"
   );
@@ -32,6 +35,10 @@ it("changes email from non corporate to corporate", async () => {
     "SELECT numberOfEmployees FROM Company"
   );
   expect(companyData?.numberOfEmployees).toBe(1);
+
   expect(busMock.send).toHaveBeenCalledTimes(1);
-  expect(busMock.send).toHaveBeenCalledWith(expect.toStartWith("Subject"));
+  expect(busMock.send).toHaveBeenCalledWith(expect.toInclude("1"));
+  expect(busMock.send).toHaveBeenCalledWith(
+    expect.toInclude("user@mycorp.com")
+  );
 });
