@@ -21,6 +21,8 @@ export class UserController {
 
     await Database.saveCompany(company.numberOfEmployees);
     await Database.saveUser(user);
-    this.messageBus.sendEmailChangedMessage(userId, newEmail);
+    user.emailChangedEvents.forEach((event) =>
+      this.messageBus.sendEmailChangedMessage(event.userId, event.newEmail)
+    );
   }
 }
