@@ -31,7 +31,7 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@types/jest": "29.2.0",
+    "@types/jest": "29.2.2",
     "@types/node": "18.11.8",
     "@typescript-eslint/eslint-plugin": "5.42.1",
     "@typescript-eslint/parser": "5.42.0",
@@ -39,7 +39,7 @@
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-jest": "27.1.4",
     "husky": "8.0.1",
-    "jest": "29.2.2",
+    "jest": "29.3.0",
     "jest-extended": "3.1.0",
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
