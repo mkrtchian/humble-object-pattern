@@ -1,6 +1,6 @@
 # Humble Object Pattern
 
-![Tests](https://github.com/mkrtchian/humble-object-pattern/workflows/Tests/badge.svg?branch=main)
+![Tests](https://github.com/mkrtchian/humble-object-pattern/actions/workflows/tests.yml/badge.svg?branch=main)
 
 This project implements the main examples of humble object pattern described in [Unit Testing: Principles, Practices, and Patterns](https://www.manning.com/books/unit-testing) from Vladimir Khorikov, using TypeScript.
 
