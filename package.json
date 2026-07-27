@@ -41,7 +41,7 @@
     "husky": "9.1.7",
     "jest": "30.4.2",
     "jest-extended": "7.0.0",
-    "lint-staged": "17.1.0",
+    "lint-staged": "17.2.0",
     "prettier": "3.9.5",
     "ts-jest": "29.4.12",
     "ts-node": "10.9.2",
